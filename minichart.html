@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balanced Team - 9 Essential Roles</title>
+    <style>
+        /* Design System Variables */
+        :root {
+            --color-white: rgba(255, 255, 255, 1);
+            --color-cream-50: rgba(252, 252, 249, 1);
+            --color-cream-100: rgba(255, 255, 253, 1);
+            --color-slate-900: rgba(19, 52, 59, 1);
+            --color-slate-500: rgba(98, 108, 113, 1);
+            --color-teal-500: rgba(33, 128, 141, 1);
+            --color-teal-600: rgba(29, 116, 128, 1);
+            --color-brown-600-rgb: 94, 82, 64;
+            --font-family-base: "FKGroteskNeue", "Geist", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --space-8: 8px;
+            --space-12: 12px;
+            --space-16: 16px;
+            --space-20: 20px;
+            --space-24: 24px;
+            --space-32: 32px;
+            --space-48: 48px;
+            --radius-base: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 20px;
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            
+            /* Warm color palette */
+            --warm-cream: #FFF8F0;
+            --warm-peach: #FFE8D6;
+            --warm-blue: #A8D8EA;
+            --warm-green: #B8E6B8;
+            --warm-orange: #FFCBA4;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-cream-50: rgba(31, 33, 33, 1);
+                --color-cream-100: rgba(38, 40, 40, 1);
+                --color-slate-900: rgba(245, 245, 245, 1);
+                --color-slate-500: rgba(167, 169, 169, 1);
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family-base);
+            background: var(--color-cream-50);
+            color: var(--color-slate-900);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: var(--space-32);
+        }
+
+        .container {
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: var(--space-48);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--color-slate-900);
+            margin-bottom: var(--space-12);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--color-slate-500);
+        }
+
+        /* Flowchart Container */
+        .flowchart-container {
+            position: relative;
+            width: 100%;
+            min-height: 800px;
+            background: var(--color-white);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            padding: var(--space-48);
+        }
+
+        /* Central Hub */
+        .central-hub {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, var(--color-teal-500), var(--color-teal-600));
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: var(--shadow-xl);
+            z-index: 10;
+        }
+
+        .central-hub h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0;
+            text-align: center;
+        }
+
+        .central-hub p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin: var(--space-4) 0 0 0;
+        }
+
+        /* SVG Lines */
+        .connections-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .connection-line {
+            stroke-width: 2;
+            stroke-opacity: 0.3;
+            fill: none;
+        }
+
+        .category-line {
+            stroke-width: 1.5;
+            stroke-opacity: 0.2;
+            fill: none;
+            stroke-dasharray: 5, 5;
+        }
+
+        /* Role Card */
+        .role-card {
+            position: absolute;
+            width: 180px;
+            background: var(--color-white);
+            border-radius: var(--radius-lg);
+            padding: var(--space-20);
+            box-shadow: var(--shadow-md);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid;
+            z-index: 5;
+        }
+
+        .role-card:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-xl);
+            z-index: 15;
+        }
+
+        .role-card.highlighted {
+            transform: scale(1.15);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            z-index: 20;
+        }
+
+        .role-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto var(--space-12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .role-icon svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .role-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--color-slate-900);
+            text-align: center;
+            margin-bottom: var(--space-8);
+        }
+
+        .role-category {
+            font-size: 0.8rem;
+            text-align: center;
+            padding: var(--space-4) var(--space-8);
+            border-radius: var(--radius-full);
+            font-weight: 500;
+        }
+
+        /* Positioning */
+        /* Action-Oriented - Top Left */
+        .role-1 { top: 10%; left: 8%; }
+        .role-2 { top: 25%; left: 2%; }
+        .role-3 { top: 42%; left: 5%; }
+
+        /* Thought-Oriented - Top Right */
+        .role-4 { top: 10%; right: 8%; }
+        .role-5 { top: 25%; right: 2%; }
+        .role-6 { top: 42%; right: 5%; }
+
+        /* People-Oriented - Bottom */
+        .role-7 { bottom: 8%; left: 15%; }
+        .role-8 { bottom: 8%; left: 50%; transform: translateX(-50%); }
+        .role-9 { bottom: 8%; right: 15%; }
+
+        /* Category Labels */
+        .category-label {
+            position: absolute;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--color-slate-900);
+            padding: var(--space-12) var(--space-20);
+            border-radius: var(--radius-lg);
+            background: var(--color-white);
+            box-shadow: var(--shadow-sm);
+            z-index: 3;
+        }
+
+        .category-action { top: 3%; left: 5%; color: #FF6B6B; }
+        .category-thought { top: 3%; right: 5%; color: #6C5CE7; }
+        .category-people { bottom: 2%; left: 50%; transform: translateX(-50%); color: #FDCB6E; }
+
+        /* Legend */
+        .legend {
+            margin-top: var(--space-32);
+            text-align: center;
+            padding: var(--space-24);
+            background: var(--color-white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .legend h3 {
+            font-size: 1.3rem;
+            color: var(--color-slate-900);
+            margin-bottom: var(--space-16);
+        }
+
+        .legend-items {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-32);
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-12);
+        }
+
+        .legend-color {
+            width: 30px;
+            height: 30px;
+            border-radius: var(--radius-sm);
+            border: 2px solid;
+        }
+
+        .legend-text {
+            font-size: 1rem;
+            color: var(--color-slate-500);
+            font-weight: 500;
+        }
+
+        /* Hero Section */
+
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .flowchart-container {
+                min-height: 1000px;
+            }
+            
+            .role-card {
+                width: 150px;
+                padding: var(--space-16);
+            }
+            
+            .role-emoji {
+                font-size: 2.5rem;
+            }
+            
+            .role-name {
+                font-size: 0.95rem;
+            }
+            
+            .central-hub {
+                width: 160px;
+                height: 160px;
+            }
+            
+            .central-hub h2 {
+                font-size: 1.4rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: var(--space-16);
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .flowchart-container {
+                padding: var(--space-24);
+                min-height: 1200px;
+            }
+            
+            .role-card {
+                width: 130px;
+                padding: var(--space-12);
+            }
+            
+            .role-icon {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .role-name {
+                font-size: 0.85rem;
+            }
+            
+            .role-category {
+                font-size: 0.7rem;
+            }
+            
+            .central-hub {
+                width: 140px;
+                height: 140px;
+            }
+            
+            .central-hub h2 {
+                font-size: 1.2rem;
+            }
+            
+            .central-hub p {
+                font-size: 0.75rem;
+            }
+            
+            .category-label {
+                font-size: 1rem;
+                padding: var(--space-8) var(--space-12);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>Balanced Team: 9 Essential Roles</h1>
+        <p>Building a successful team with complementary strengths</p>
+    </div>
+
+    <div class="container">
+        <!-- Flowchart Container -->
+        <div class="flowchart-container">
+            <!-- SVG Definitions for Icons -->
+            <svg style="display: none;">
+                <defs>
+                    <!-- Shaper: Target with Arrow -->
+                    <g id="icon-target">
+                        <circle cx="35" cy="35" r="30" fill="#FFB3B3" stroke="#FF6B6B" stroke-width="2"/>
+                        <circle cx="35" cy="35" r="20" fill="#FF6B6B" stroke="#FF6B6B" stroke-width="2"/>
+                        <circle cx="35" cy="35" r="10" fill="#FFB3B3"/>
+                        <path d="M 50 35 L 62 35 L 58 31 M 62 35 L 58 39" stroke="#FF6B6B" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    </g>
+                    
+                    <!-- Implementer: Gears -->
+                    <g id="icon-gears">
+                        <g transform="translate(25, 30)">
+                            <circle cx="0" cy="0" r="12" fill="#FF6B6B"/>
+                            <circle cx="0" cy="0" r="6" fill="#FFB3B3" stroke="#FF6B6B" stroke-width="2"/>
+                            <path d="M 0,-12 L 0,-16 M 0,12 L 0,16 M -12,0 L -16,0 M 12,0 L 16,0" stroke="#FF6B6B" stroke-width="3" stroke-linecap="round"/>
+                        </g>
+                        <g transform="translate(45, 40)">
+                            <circle cx="0" cy="0" r="10" fill="#FFB3B3"/>
+                            <circle cx="0" cy="0" r="5" fill="#FF6B6B" stroke="#FFB3B3" stroke-width="2"/>
+                            <path d="M 0,-10 L 0,-13 M 0,10 L 0,13 M -10,0 L -13,0 M 10,0 L 13,0" stroke="#FFB3B3" stroke-width="2.5" stroke-linecap="round"/>
+                        </g>
+                    </g>
+                    
+                    <!-- Completer Finisher: Checkmark Badge -->
+                    <g id="icon-checkmark">
+                        <circle cx="35" cy="35" r="28" fill="#FFB3B3" stroke="#FF6B6B" stroke-width="3"/>
+                        <path d="M 20 35 L 30 45 L 52 23" stroke="#FF6B6B" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    </g>
+                    
+                    <!-- Plant: Light Bulb -->
+                    <g id="icon-lightbulb">
+                        <ellipse cx="35" cy="30" rx="15" ry="18" fill="#A8DADC" stroke="#6C5CE7" stroke-width="2"/>
+                        <rect x="28" y="45" width="14" height="8" rx="2" fill="#6C5CE7"/>
+                        <rect x="30" y="52" width="10" height="4" rx="1" fill="#6C5CE7"/>
+                        <path d="M 35 8 L 35 15 M 20 15 L 16 11 M 50 15 L 54 11 M 15 30 L 8 30 M 55 30 L 62 30" stroke="#A8DADC" stroke-width="2.5" stroke-linecap="round"/>
+                    </g>
+                    
+                    <!-- Monitor Evaluator: Focus Circle -->
+                    <g id="icon-focus-circle">
+                        <circle cx="35" cy="35" r="28" fill="none" stroke="#A8DADC" stroke-width="2"/>
+                        <circle cx="35" cy="35" r="20" fill="none" stroke="#6C5CE7" stroke-width="2"/>
+                        <circle cx="35" cy="35" r="12" fill="none" stroke="#6C5CE7" stroke-width="3"/>
+                        <circle cx="35" cy="35" r="4" fill="#6C5CE7"/>
+                        <path d="M 10 10 L 18 18 M 60 10 L 52 18 M 10 60 L 18 52 M 60 60 L 52 52" stroke="#A8DADC" stroke-width="2.5" stroke-linecap="round"/>
+                    </g>
+                    
+                    <!-- Specialist: Book with Ribbon -->
+                    <g id="icon-book">
+                        <rect x="18" y="15" width="34" height="42" rx="2" fill="#6C5CE7" stroke="#6C5CE7" stroke-width="2"/>
+                        <rect x="20" y="15" width="30" height="42" rx="1" fill="#A8DADC"/>
+                        <line x1="35" y1="15" x2="35" y2="57" stroke="#6C5CE7" stroke-width="2"/>
+                        <rect x="32" y="12" width="6" height="50" fill="#A8DADC"/>
+                        <path d="M 32 57 L 35 62 L 38 57" fill="#6C5CE7" stroke="none"/>
+                    </g>
+                    
+                    <!-- Coordinator: Handshake -->
+                    <g id="icon-handshake">
+                        <path d="M 15 35 Q 18 30 23 28 L 30 28 L 32 35 L 28 40" fill="#FFE5CC" stroke="#FDCB6E" stroke-width="2" stroke-linejoin="round"/>
+                        <path d="M 55 35 Q 52 30 47 28 L 40 28 L 38 35 L 42 40" fill="#FFE5CC" stroke="#FDCB6E" stroke-width="2" stroke-linejoin="round"/>
+                        <ellipse cx="35" cy="35" rx="8" ry="6" fill="#FDCB6E"/>
+                        <rect x="10" y="38" width="8" height="15" rx="2" fill="#FFE5CC" stroke="#FDCB6E" stroke-width="1.5"/>
+                        <rect x="52" y="38" width="8" height="15" rx="2" fill="#FFE5CC" stroke="#FDCB6E" stroke-width="1.5"/>
+                    </g>
+                    
+                    <!-- Teamworker: People Group -->
+                    <g id="icon-people">
+                        <circle cx="25" cy="23" r="7" fill="#FDCB6E"/>
+                        <ellipse cx="25" cy="40" rx="10" ry="12" fill="#FDCB6E"/>
+                        <circle cx="45" cy="23" r="7" fill="#FFE5CC"/>
+                        <ellipse cx="45" cy="40" rx="10" ry="12" fill="#FFE5CC"/>
+                        <circle cx="35" cy="28" r="8" fill="#FDCB6E"/>
+                        <ellipse cx="35" cy="47" rx="11" ry="13" fill="#FDCB6E"/>
+                    </g>
+                    
+                    <!-- Resource Investigator: Magnifying Glass -->
+                    <g id="icon-magnifying-glass">
+                        <circle cx="28" cy="28" r="16" fill="none" stroke="#FDCB6E" stroke-width="3"/>
+                        <circle cx="28" cy="28" r="12" fill="#FFE5CC" opacity="0.3"/>
+                        <line x1="40" y1="40" x2="56" y2="56" stroke="#FDCB6E" stroke-width="5" stroke-linecap="round"/>
+                        <line x1="54" y1="54" x2="58" y2="58" stroke="#FFE5CC" stroke-width="3" stroke-linecap="round"/>
+                    </g>
+                </defs>
+            </svg>
+            
+            <!-- SVG for connection lines -->
+            <svg class="connections-svg" id="connectionsSvg">
+                <!-- Lines will be drawn by JavaScript -->
+            </svg>
+
+            <!-- Category Labels -->
+            <div class="category-label category-action">Action-Oriented</div>
+            <div class="category-label category-thought">Thought-Oriented</div>
+            <div class="category-label category-people">People-Oriented</div>
+
+            <!-- Central Hub -->
+            <div class="central-hub">
+                <h2>Balanced Team</h2>
+                <p>9 Powers</p>
+            </div>
+
+            <!-- Role Cards will be generated by JavaScript -->
+            <div id="roleCards"></div>
+        </div>
+
+        <!-- Legend -->
+        <div class="legend">
+            <h3>Role Categories</h3>
+            <div class="legend-items">
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #FF6B6B; border-color: #FF6B6B;"></div>
+                    <span class="legend-text">Action-Oriented: Drive, Execute, Perfect</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #6C5CE7; border-color: #6C5CE7;"></div>
+                    <span class="legend-text">Thought-Oriented: Create, Analyze, Specialize</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #FDCB6E; border-color: #FDCB6E;"></div>
+                    <span class="legend-text">People-Oriented: Coordinate, Support, Connect</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const roles = [
+            { id: 1, name: "Shaper", icon: "target", category: "Action-Oriented", color: "#FF6B6B" },
+            { id: 2, name: "Implementer", icon: "gears", category: "Action-Oriented", color: "#FF6B6B" },
+            { id: 3, name: "Completer Finisher", icon: "checkmark", category: "Action-Oriented", color: "#FF6B6B" },
+            { id: 4, name: "Plant", icon: "lightbulb", category: "Thought-Oriented", color: "#6C5CE7" },
+            { id: 5, name: "Monitor Evaluator", icon: "focus-circle", category: "Thought-Oriented", color: "#6C5CE7" },
+            { id: 6, name: "Specialist", icon: "book", category: "Thought-Oriented", color: "#6C5CE7" },
+            { id: 7, name: "Coordinator", icon: "handshake", category: "People-Oriented", color: "#FDCB6E" },
+            { id: 8, name: "Teamworker", icon: "people", category: "People-Oriented", color: "#FDCB6E" },
+            { id: 9, name: "Resource Investigator", icon: "magnifying-glass", category: "People-Oriented", color: "#FDCB6E" }
+        ];
+
+        const categories = [
+            { name: "Action-Oriented", roles: [1, 2, 3] },
+            { name: "Thought-Oriented", roles: [4, 5, 6] },
+            { name: "People-Oriented", roles: [7, 8, 9] }
+        ];
+
+        // State for hover interactions
+        let hoveredRole = null;
+
+        const quizQuestions = [
+            {
+                question: "When faced with a problem, what's your first instinct?",
+                options: [
+                    { text: "Take action immediately", category: "action" },
+                    { text: "Analyze all the angles", category: "thought" },
+                    { text: "Connect with people to solve it together", category: "people" }
+                ]
+            },
+            {
+                question: "What energizes you most at work?",
+                options: [
+                    { text: "Driving results and seeing progress", category: "action" },
+                    { text: "Deep thinking and creative problem-solving", category: "thought" },
+                    { text: "Helping teammates and building relationships", category: "people" }
+                ]
+            },
+            {
+                question: "How do you prefer to work?",
+                options: [
+                    { text: "Fast-paced and results-driven", category: "action" },
+                    { text: "Carefully planned with room for reflection", category: "thought" },
+                    { text: "Collaboratively with constant communication", category: "people" }
+                ]
+            },
+            {
+                question: "What frustrates you most?",
+                options: [
+                    { text: "Slow progress or lack of momentum", category: "action" },
+                    { text: "Rushed decisions without proper analysis", category: "thought" },
+                    { text: "Conflict or tension in the team", category: "people" }
+                ]
+            },
+            {
+                question: "Your ideal team member...",
+                options: [
+                    { text: "Gets things done and delivers results", category: "action" },
+                    { text: "Brings fresh ideas and thoughtful analysis", category: "thought" },
+                    { text: "Listens well and supports the team", category: "people" }
+                ]
+            }
+        ];
+
+        // Initialize flowchart
+        function initFlowchart() {
+            generateRoleCards();
+            drawConnections();
+            setupInteractions();
+        }
+
+        function generateRoleCards() {
+            const container = document.getElementById('roleCards');
+            roles.forEach((role, index) => {
+                const card = createRoleCard(role, index + 1);
+                container.appendChild(card);
+            });
+        }
+
+        function createRoleCard(role, position) {
+            const card = document.createElement('div');
+            card.className = `role-card role-${position}`;
+            card.style.borderColor = role.color;
+            card.dataset.roleId = role.id;
+            card.dataset.category = role.category;
+            
+            card.innerHTML = `
+                <div class="role-icon">
+                    <svg viewBox="0 0 70 70">
+                        <use href="#icon-${role.icon}" />
+                    </svg>
+                </div>
+                <div class="role-name">${role.name}</div>
+                <div class="role-category" style="background-color: ${role.color}; color: white;">
+                    ${getCategoryLabel(role.category)}
+                </div>
+            `;
+            
+            return card;
+        }
+
+        function getCategoryLabel(category) {
+            const labels = {
+                'Action-Oriented': 'Action',
+                'Thought-Oriented': 'Thought',
+                'People-Oriented': 'People'
+            };
+            return labels[category] || 'Team';
+        }
+
+        function drawConnections() {
+            const svg = document.getElementById('connectionsSvg');
+            const container = document.querySelector('.flowchart-container');
+            const centerHub = document.querySelector('.central-hub');
+            
+            const containerRect = container.getBoundingClientRect();
+            const hubRect = centerHub.getBoundingClientRect();
+            const hubCenterX = hubRect.left - containerRect.left + hubRect.width / 2;
+            const hubCenterY = hubRect.top - containerRect.top + hubRect.height / 2;
+
+            // Draw connections from each role to center
+            roles.forEach(role => {
+                const roleCard = document.querySelector(`.role-card[data-role-id="${role.id}"]`);
+                if (!roleCard) return;
+                
+                const roleRect = roleCard.getBoundingClientRect();
+                const roleCenterX = roleRect.left - containerRect.left + roleRect.width / 2;
+                const roleCenterY = roleRect.top - containerRect.top + roleRect.height / 2;
+                
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                line.setAttribute('x1', roleCenterX);
+                line.setAttribute('y1', roleCenterY);
+                line.setAttribute('x2', hubCenterX);
+                line.setAttribute('y2', hubCenterY);
+                line.setAttribute('class', 'connection-line');
+                line.setAttribute('stroke', role.color);
+                line.dataset.roleId = role.id;
+                svg.appendChild(line);
+            });
+
+            // Draw category connections
+            categories.forEach(cat => {
+                const categoryRoles = roles.filter(r => cat.roles.includes(r.id));
+                for (let i = 0; i < categoryRoles.length - 1; i++) {
+                    const role1 = document.querySelector(`.role-card[data-role-id="${categoryRoles[i].id}"]`);
+                    const role2 = document.querySelector(`.role-card[data-role-id="${categoryRoles[i + 1].id}"]`);
+                    
+                    if (role1 && role2) {
+                        const rect1 = role1.getBoundingClientRect();
+                        const rect2 = role2.getBoundingClientRect();
+                        const x1 = rect1.left - containerRect.left + rect1.width / 2;
+                        const y1 = rect1.top - containerRect.top + rect1.height / 2;
+                        const x2 = rect2.left - containerRect.left + rect2.width / 2;
+                        const y2 = rect2.top - containerRect.top + rect2.height / 2;
+                        
+                        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                        line.setAttribute('x1', x1);
+                        line.setAttribute('y1', y1);
+                        line.setAttribute('x2', x2);
+                        line.setAttribute('y2', y2);
+                        line.setAttribute('class', 'category-line');
+                        line.setAttribute('stroke', categoryRoles[i].color);
+                        svg.appendChild(line);
+                    }
+                }
+            });
+        }
+
+        function setupInteractions() {
+            const roleCards = document.querySelectorAll('.role-card');
+            roleCards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    const roleId = card.dataset.roleId;
+                    highlightRole(roleId);
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    clearHighlights();
+                });
+            });
+        }
+
+        function highlightRole(roleId) {
+            // Highlight the card
+            const card = document.querySelector(`.role-card[data-role-id="${roleId}"]`);
+            if (card) {
+                card.classList.add('highlighted');
+            }
+            
+            // Highlight connection lines
+            const lines = document.querySelectorAll(`.connection-line[data-role-id="${roleId}"]`);
+            lines.forEach(line => {
+                line.style.strokeWidth = '4';
+                line.style.strokeOpacity = '0.8';
+            });
+        }
+
+        function clearHighlights() {
+            // Remove card highlights
+            document.querySelectorAll('.role-card.highlighted').forEach(card => {
+                card.classList.remove('highlighted');
+            });
+            
+            // Reset connection lines
+            document.querySelectorAll('.connection-line').forEach(line => {
+                line.style.strokeWidth = '2';
+                line.style.strokeOpacity = '0.3';
+            });
+        }
+
+        // Quiz functionality (simplified)
+        function generateQuiz() {
+            const container = document.getElementById('quizContainer');
+            quizQuestions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                if (index === 0) questionDiv.classList.add('active');
+                questionDiv.id = `question-${index}`;
+                
+                questionDiv.innerHTML = `
+                    <h3>Question ${index + 1} of ${quizQuestions.length}</h3>
+                    <p style="font-size: 1.2rem; margin-bottom: 24px; color: var(--color-slate-900);">${q.question}</p>
+                    <div class="options">
+                        ${q.options.map((opt, optIndex) => `
+                            <div class="option" onclick="selectOption(${index}, ${optIndex}, '${opt.category}')">
+                                ${opt.text}
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                
+                container.appendChild(questionDiv);
+            });
+
+            // Add navigation
+            const navDiv = document.createElement('div');
+            navDiv.className = 'quiz-nav';
+            navDiv.innerHTML = `
+                <button class="quiz-button" id="prevBtn" onclick="previousQuestion()" disabled>← Previous</button>
+                <button class="quiz-button" id="nextBtn" onclick="nextQuestion()" disabled>Next →</button>
+                <button class="quiz-button" id="submitBtn" onclick="submitQuiz()" style="display: none;">See My Role! 🎉</button>
+            `;
+            container.appendChild(navDiv);
+        }
+
+        function selectOption(questionIndex, optionIndex, category) {
+            // Remove previous selection
+            const options = document.querySelectorAll(`#question-${questionIndex} .option`);
+            options.forEach(opt => opt.classList.remove('selected'));
+            
+            // Add new selection
+            options[optionIndex].classList.add('selected');
+            selectedOption = category;
+            
+            // Enable next/submit button
+            document.getElementById('nextBtn').disabled = false;
+            if (currentQuestion === quizQuestions.length - 1) {
+                document.getElementById('submitBtn').style.display = 'inline-block';
+            }
+        }
+
+        function nextQuestion() {
+            if (!selectedOption) return;
+            
+            // Record answer
+            answers[selectedOption]++;
+            
+            // Hide current question
+            document.getElementById(`question-${currentQuestion}`).classList.remove('active');
+            
+            // Show next question
+            currentQuestion++;
+            if (currentQuestion < quizQuestions.length) {
+                document.getElementById(`question-${currentQuestion}`).classList.add('active');
+                selectedOption = null;
+                
+                // Update buttons
+                document.getElementById('prevBtn').disabled = false;
+                document.getElementById('nextBtn').disabled = true;
+                
+                if (currentQuestion === quizQuestions.length - 1) {
+                    document.getElementById('nextBtn').style.display = 'none';
+                    document.getElementById('submitBtn').style.display = 'inline-block';
+                    document.getElementById('submitBtn').disabled = true;
+                }
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                document.getElementById(`question-${currentQuestion}`).classList.remove('active');
+                currentQuestion--;
+                document.getElementById(`question-${currentQuestion}`).classList.add('active');
+                
+                // Update buttons
+                document.getElementById('prevBtn').disabled = currentQuestion === 0;
+                document.getElementById('nextBtn').style.display = 'inline-block';
+                document.getElementById('submitBtn').style.display = 'none';
+            }
+        }
+
+        function submitQuiz() {
+            if (!selectedOption) return;
+            
+            // Record last answer
+            answers[selectedOption]++;
+            
+            // Determine result
+            const maxCategory = Object.keys(answers).reduce((a, b) => 
+                answers[a] > answers[b] ? a : b
+            );
+            
+            // Get matching roles
+            const categoryMap = {
+                'action': 'Action-Oriented',
+                'thought': 'Thought-Oriented',
+                'people': 'People-Oriented'
+            };
+            
+            const matchingRoles = teamMembers.filter(m => 
+                m.category === categoryMap[maxCategory]
+            );
+            
+            // Pick a random matching role
+            const role = matchingRoles[Math.floor(Math.random() * matchingRoles.length)];
+            
+            // Hide quiz, show result
+            document.getElementById('quizContainer').style.display = 'none';
+            const resultDiv = document.getElementById('quizResult');
+            resultDiv.classList.add('show');
+            
+            resultDiv.innerHTML = `
+                <div class="result-emoji">${role.emoji}</div>
+                <div class="result-message">We think you might be a ${role.role_name}!</div>
+                <div class="result-description">
+                    <p><strong>"${role.superpower}"</strong></p>
+                    <p>${role.personal_quote}</p>
+                    <p style="margin-top: 24px;">You're ${categoryMap[maxCategory].toLowerCase()}, which means you ${getCategoryDescription(maxCategory)}.</p>
+                    <p style="margin-top: 16px;">Scroll up to meet ${role.character_name} and learn more about your role!</p>
+                </div>
+                <button class="cta-button" onclick="restartQuiz()">Take Quiz Again</button>
+            `;
+        }
+
+        function getCategoryDescription(category) {
+            const descriptions = {
+                'action': 'thrive on getting things done, driving results, and turning ideas into reality',
+                'thought': 'excel at strategic thinking, innovation, and bringing deep expertise to solve complex problems',
+                'people': 'shine when building connections, supporting teammates, and fostering collaboration'
+            };
+            return descriptions[category];
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            answers = { action: 0, thought: 0, people: 0 };
+            selectedOption = null;
+            
+            document.getElementById('quizResult').classList.remove('show');
+            document.getElementById('quizContainer').style.display = 'block';
+            document.getElementById('quizContainer').innerHTML = '';
+            generateQuiz();
+        }
+
+        function scrollToQuiz() {
+            document.getElementById('quizSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initFlowchart();
+        });
+
+        // Redraw connections on window resize
+        window.addEventListener('resize', () => {
+            const svg = document.getElementById('connectionsSvg');
+            svg.innerHTML = '';
+            drawConnections();
+        });
+    </script>
+</body>
+</html>

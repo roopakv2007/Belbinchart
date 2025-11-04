@@ -1,0 +1,758 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9 Team Roles for Building Balanced Teams</title>
+    <style>
+        :root {
+            --color-white: rgba(255, 255, 255, 1);
+            --color-cream-50: rgba(252, 252, 249, 1);
+            --color-cream-100: rgba(255, 255, 253, 1);
+            --color-slate-900: rgba(19, 52, 59, 1);
+            --color-slate-500: rgba(98, 108, 113, 1);
+            --color-teal-500: rgba(33, 128, 141, 1);
+            --color-brown-600-rgb: 94, 82, 64;
+            --font-family-base: "FKGroteskNeue", "Geist", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --space-8: 8px;
+            --space-12: 12px;
+            --space-16: 16px;
+            --space-20: 20px;
+            --space-24: 24px;
+            --space-32: 32px;
+            --radius-base: 8px;
+            --radius-lg: 12px;
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-cream-50: rgba(31, 33, 33, 1);
+                --color-cream-100: rgba(38, 40, 40, 1);
+                --color-slate-900: rgba(245, 245, 245, 1);
+                --color-slate-500: rgba(167, 169, 169, 1);
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family-base);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--color-slate-900);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: var(--space-32);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: var(--space-32);
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--color-slate-900);
+            margin-bottom: var(--space-16);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .intro-text {
+            font-size: 1.5rem;
+            color: var(--color-slate-900);
+  
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--color-slate-500);
+            max-width: 800px;
+            margin: 0 auto var(--space-32);
+        }
+
+        .overview-section {
+            background: var(--color-cream-100);
+            border-radius: var(--radius-lg);
+            padding: var(--space-32);
+            margin-bottom: var(--space-32);
+            box-shadow: var(--shadow-md);
+            animation: fadeIn 1s ease-out;
+        }
+
+        .overview-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: var(--space-20);
+            color: var(--color-slate-900);
+        }
+
+        .categories-legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-20);
+        }
+
+        .legend-item {
+            padding: var(--space-20);
+            border-radius: var(--radius-base);
+            background: var(--color-white);
+            border-left: 4px solid;
+            box-shadow: var(--shadow-md);
+            transition: transform 0.3s ease;
+        }
+
+        .legend-item:hover {
+            transform: translateY(-4px);
+        }
+
+        .legend-item.action {
+            border-color: #FF6B6B;
+        }
+
+        .legend-item.thought {
+            border-color: #0984E3;
+        }
+
+        .legend-item.people {
+            border-color: #FDCB6E;
+        }
+
+        .legend-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: var(--space-8);
+        }
+
+        .legend-description {
+            font-size: 0.95rem;
+            color: var(--color-slate-500);
+        }
+
+        .roles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: var(--space-24);
+            margin-bottom: var(--space-32);
+        }
+
+        .role-card {
+            background: var(--color-cream-100);
+            border-radius: var(--radius-lg);
+            padding: var(--space-24);
+            box-shadow: var(--shadow-md);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+
+        .role-card:nth-child(1) { animation-delay: 0.1s; }
+        .role-card:nth-child(2) { animation-delay: 0.2s; }
+        .role-card:nth-child(3) { animation-delay: 0.3s; }
+        .role-card:nth-child(4) { animation-delay: 0.4s; }
+        .role-card:nth-child(5) { animation-delay: 0.5s; }
+        .role-card:nth-child(6) { animation-delay: 0.6s; }
+        .role-card:nth-child(7) { animation-delay: 0.7s; }
+        .role-card:nth-child(8) { animation-delay: 0.8s; }
+        .role-card:nth-child(9) { animation-delay: 0.9s; }
+
+        .role-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: currentColor;
+        }
+
+        .role-card.expanded {
+            grid-column: span 1;
+        }
+
+        .role-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--space-16);
+        }
+
+        .role-emoji {
+            font-size: 3rem;
+            margin-right: var(--space-16);
+        }
+
+        .role-title-group {
+            flex: 1;
+        }
+
+        .role-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: var(--space-8);
+            color: var(--color-slate-900);
+        }
+
+        .role-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--color-white);
+        }
+
+        .role-description {
+            font-size: 1rem;
+            color: var(--color-slate-500);
+            margin-bottom: var(--space-16);
+            line-height: 1.6;
+        }
+
+        .key-characteristics {
+            margin-bottom: var(--space-16);
+        }
+
+        .key-characteristics h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: var(--space-8);
+            color: var(--color-slate-900);
+        }
+
+        .key-characteristics ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .key-characteristics li {
+            padding: 4px 0;
+            font-size: 0.9rem;
+            color: var(--color-slate-500);
+        }
+
+        .key-characteristics li:before {
+            content: "✓ ";
+            color: var(--color-teal-500);
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .expand-button {
+            background: var(--color-teal-500);
+            color: var(--color-white);
+            border: none;
+            padding: var(--space-12) var(--space-24);
+            border-radius: var(--radius-base);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: var(--space-8);
+        }
+
+        .expand-button:hover {
+            background: rgba(33, 128, 141, 0.8);
+            transform: scale(1.02);
+        }
+
+        .details-section {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .details-section.show {
+            max-height: 2000px;
+        }
+
+        .detail-block {
+            margin-top: var(--space-20);
+            padding-top: var(--space-20);
+            border-top: 1px solid rgba(var(--color-brown-600-rgb), 0.2);
+        }
+
+        .detail-block h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: var(--space-12);
+            color: var(--color-slate-900);
+        }
+
+        .detail-block ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .detail-block li {
+            padding: 6px 0;
+            font-size: 0.9rem;
+            color: var(--color-slate-500);
+            line-height: 1.5;
+        }
+
+        .strengths li:before {
+            content: "💪 ";
+            margin-right: 8px;
+        }
+
+        .weaknesses li:before {
+            content: "⚠️ ";
+            margin-right: 8px;
+        }
+
+        .example-box {
+            background: rgba(33, 128, 141, 0.1);
+            padding: var(--space-16);
+            border-radius: var(--radius-base);
+            border-left: 3px solid var(--color-teal-500);
+            font-size: 0.9rem;
+            color: var(--color-slate-500);
+            margin-top: var(--space-12);
+        }
+
+        .value-box {
+            background: rgba(255, 107, 107, 0.1);
+            padding: var(--space-16);
+            border-radius: var(--radius-base);
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--color-slate-900);
+            margin-top: var(--space-12);
+            border-left: 3px solid #FF6B6B;
+        }
+
+        .footer-info {
+            text-align: center;
+            padding: var(--space-32);
+            background: var(--color-cream-100);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+        }
+
+        .footer-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: var(--space-16);
+            color: var(--color-slate-900);
+        }
+
+        .footer-info p {
+            font-size: 1rem;
+            color: var(--color-slate-500);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .mini-chart-link {
+            display: inline-block;
+            padding: var(--space-12) var(--space-24);
+            background-color: var(--color-teal-500);
+            color: var(--color-white);
+            text-decoration: none;
+            border-radius: var(--radius-base);
+            font-weight: 600;
+            margin-bottom: var(--space-16);
+            transition: background-color 0.3s ease;
+        }
+
+        .mini-chart-link:hover {
+            background-color: rgba(33, 128, 141, 0.8);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: var(--space-16);
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .roles-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .categories-legend {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h2>BELBIN TEAM ROLES</h2>
+            <p class="intro-text">Belbin's team roles theory, developed by R. Meredith Belbin, categorizes nine types of behavior that people exhibit in a team setting. The theory posits that a team's success is based on a balance of these behaviors, rather than individual intelligence.</p>
+            <a href="minichart.html" class="mini-chart-link">Mini Chart</a>
+            <h1>THE NINE BELBIN TEAM ROLES</h1>
+        </header>
+
+        <div class="overview-section">
+            <h2 class="overview-title">Understanding the Three Role Categories</h2>
+            <div class="categories-legend">
+                <div class="legend-item action">
+                    <div class="legend-title"><img src="action.png" alt="Action" style="width: 3rem; height: 3rem; vertical-align: middle; margin-right: 8px;"> Action-Oriented Roles</div>
+                    <div class="legend-description">Drive the team forward and ensure tasks get completed with precision and efficiency</div>
+                </div>
+                <div class="legend-item thought">
+                    <div class="legend-title"><img src="thought.png" alt="Thought" style="width: 3rem; height: 3rem; vertical-align: middle; margin-right: 8px;"> Thought-Oriented Roles</div>
+                    <div class="legend-description">Provide strategy, analysis, and creative solutions through deep thinking and expertise</div>
+                </div>
+                <div class="legend-item people">
+                    <div class="legend-title"><img src="people.png" alt="People" style="width: 3rem; height: 3rem; vertical-align: middle; margin-right: 8px;"> People-Oriented Roles</div>
+                    <div class="legend-description">Foster collaboration, communication, and team cohesion for a harmonious environment</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="roles-grid" id="rolesGrid">
+            <!-- Role cards will be dynamically generated here -->
+        </div>
+
+    </div>
+
+    <script>
+        const teamRoles = [
+            {
+                id: 1,
+                name: "Shaper",
+                emoji: "🚀",
+                category: "Action-Oriented",
+                color: "#FF6B6B",
+                description: "Dynamic and ambitious individuals who drive teams forward through action and challenge. They embrace pressure and quickly find solutions.",
+                keyCharacteristics: [
+                    "Action-oriented",
+                    "Natural leaders",
+                    "Crisis problem-solvers"
+                ],
+                strengths: [
+                    "Problem solving",
+                    "Ambition and drive",
+                    "Thrives under pressure",
+                    "Motivates others"
+                ],
+                weaknesses: [
+                    "Can be provocative",
+                    "May argue easily",
+                    "Perceived as arrogant",
+                    "Hectic behavior can cause anxiety"
+                ],
+                example: "Head of Product in a product marketing team, overseeing team vision and roadmap",
+                value: "Provides direction and drives progress toward goals"
+            },
+            {
+                id: 2,
+                name: "Implementer",
+                emoji: "🔧",
+                category: "Action-Oriented",
+                color: "#FFA500",
+                description: "Practical and disciplined team members who maintain order and turn ideas into reality. They are the backbone of teams.",
+                keyCharacteristics: [
+                    "Practical and disciplined",
+                    "Process-oriented",
+                    "Highly reliable"
+                ],
+                strengths: [
+                    "Task completion",
+                    "Efficiency",
+                    "Dependability",
+                    "Systematic approach"
+                ],
+                weaknesses: [
+                    "Resistant to change",
+                    "Inflexible to new solutions",
+                    "Prefers established ways"
+                ],
+                example: "Data-driven business analyst assessing ways to make organizational processes more efficient",
+                value: "Ensures goals become tangible successes through structure and discipline"
+            },
+            {
+                id: 3,
+                name: "Completer Finisher",
+                emoji: "✅",
+                category: "Action-Oriented",
+                color: "#FFD93D",
+                description: "Detail-oriented perfectionists who notice fine details and push teams to produce high-quality work. They ensure nothing is missed.",
+                keyCharacteristics: [
+                    "Detail-focused",
+                    "Quality assurance",
+                    "Perfectionist"
+                ],
+                strengths: [
+                    "Attention to detail",
+                    "Deadline adherence",
+                    "Error detection",
+                    "Quality focus"
+                ],
+                weaknesses: [
+                    "Overly conscientious",
+                    "Worry about missing things",
+                    "Difficulty delegating",
+                    "Lose sight of bigger picture"
+                ],
+                example: "Tech support specialist who identifies and fixes problems quickly and efficiently",
+                value: "Ensures high-quality work and maintains standards"
+            },
+            {
+                id: 4,
+                name: "Plant",
+                emoji: "💡",
+                category: "Thought-Oriented",
+                color: "#6C5CE7",
+                description: "Innovative and creative thinkers who bring fresh ideas to the team. They prefer to work alone initially but provide valuable input.",
+                keyCharacteristics: [
+                    "Creative and innovative",
+                    "Idea generator",
+                    "Independent thinker"
+                ],
+                strengths: [
+                    "Creativity",
+                    "Innovation",
+                    "Problem-solving",
+                    "Unconventional thinking"
+                ],
+                weaknesses: [
+                    "Preference to work alone",
+                    "May not share ideas readily",
+                    "Detached from others",
+                    "Can overlook practicality"
+                ],
+                example: "Product designer who generates creative solutions and new product concepts",
+                value: "Brings innovation and fresh perspectives to projects"
+            },
+            {
+                id: 5,
+                name: "Monitor Evaluator",
+                emoji: "🔍",
+                category: "Thought-Oriented",
+                color: "#0984E3",
+                description: "Rational, strategic thinkers who assess ideas objectively and can put emotions aside for problem-solving and planning.",
+                keyCharacteristics: [
+                    "Rational thinker",
+                    "Strategic planner",
+                    "Objective analyst"
+                ],
+                strengths: [
+                    "Strategic planning",
+                    "Analysis",
+                    "Sound judgment",
+                    "Objectivity"
+                ],
+                weaknesses: [
+                    "Lacks drive",
+                    "Can be overly critical",
+                    "Slow decision-making",
+                    "Not inspiring"
+                ],
+                example: "Project manager who strategically scopes projects and connects dots across teams",
+                value: "Provides strategic direction and sound judgment for decision-making"
+            },
+            {
+                id: 6,
+                name: "Specialist",
+                emoji: "🔬",
+                category: "Thought-Oriented",
+                color: "#00B894",
+                description: "Experts in their field with in-depth knowledge. They contribute specialized skills and prefer to work independently on their expertise.",
+                keyCharacteristics: [
+                    "Subject matter expert",
+                    "Deep knowledge",
+                    "Technical specialist"
+                ],
+                strengths: [
+                    "Specialized expertise",
+                    "Deep knowledge",
+                    "Technical competence",
+                    "Dedicated focus"
+                ],
+                weaknesses: [
+                    "Limited interest outside specialty",
+                    "Contributes narrowly",
+                    "Inflexible on methods",
+                    "Difficulty collaborating"
+                ],
+                example: "Coders, SEO analysts, or technical crew members with specialized skills",
+                value: "Provides essential expertise and technical excellence"
+            },
+            {
+                id: 7,
+                name: "Coordinator",
+                emoji: "🤝",
+                category: "People-Oriented",
+                color: "#FDCB6E",
+                description: "Excellent communicators in leadership positions who promote collaboration and motivate teams. Others trust them to make decisions.",
+                keyCharacteristics: [
+                    "Great communicator",
+                    "Collaborative leader",
+                    "Team motivator"
+                ],
+                strengths: [
+                    "Communication",
+                    "Leadership",
+                    "Interpersonal skills",
+                    "Decision-making"
+                ],
+                weaknesses: [
+                    "Can be manipulative",
+                    "May delegate too much",
+                    "Perceived as lazy",
+                    "Limited decision-making depth"
+                ],
+                example: "Lead of a product development team who collaborates with diverse team members",
+                value: "Ensures team cohesion and effective collaboration"
+            },
+            {
+                id: 8,
+                name: "Teamworker",
+                emoji: "💪",
+                category: "People-Oriented",
+                color: "#E17055",
+                description: "Extroverted collaborators with great listening skills. They adapt easily to changes and create harmony when conflict arises.",
+                keyCharacteristics: [
+                    "Natural collaborator",
+                    "Adaptive and flexible",
+                    "Harmony creator"
+                ],
+                strengths: [
+                    "Team support",
+                    "Listening skills",
+                    "Flexibility",
+                    "Conflict resolution"
+                ],
+                weaknesses: [
+                    "Indecisive",
+                    "Avoids conflict",
+                    "Lacks initiative",
+                    "Can be passive"
+                ],
+                example: "Product marketer within a larger team who supports colleagues",
+                value: "Maintains team morale and supports colleagues during challenges"
+            },
+            {
+                id: 9,
+                name: "Resource Investigator",
+                emoji: "🔗",
+                category: "People-Oriented",
+                color: "#74B9FF",
+                description: "Enthusiastic networkers who explore new opportunities and build connections. Their positive attitude facilitates business growth.",
+                keyCharacteristics: [
+                    "Natural networker",
+                    "Opportunity finder",
+                    "Positive attitude"
+                ],
+                strengths: [
+                    "Networking",
+                    "Exploration",
+                    "Communication",
+                    "Enthusiasm"
+                ],
+                weaknesses: [
+                    "Can lose interest quickly",
+                    "May not follow through",
+                    "Optimism can be unrealistic",
+                    "Difficulty with details"
+                ],
+                example: "Product sales professional who networks with stakeholders for new launches",
+                value: "Opens doors to new opportunities and external connections"
+            }
+        ];
+
+        function createRoleCard(role) {
+            const card = document.createElement('div');
+            card.className = 'role-card';
+            card.style.color = role.color;
+
+            const imageSrc = role.category === "Action-Oriented" ? "action.png" : role.category === "Thought-Oriented" ? "thought.png" : "people.png";
+            const altText = role.category === "Action-Oriented" ? "Action" : role.category === "Thought-Oriented" ? "Thought" : "People";
+
+            card.innerHTML = `
+                <div class="role-header">
+                    <div class="role-emoji"><img src="${imageSrc}" alt="${altText}" style="width: 3rem; height: 3rem;"></div>
+                    <div class="role-title-group">
+                        <h3 class="role-name">${role.name}</h3>
+                        <span class="role-badge" style="background-color: ${role.color}">${role.category}</span>
+                    </div>
+                </div>
+                <p class="role-description">${role.description}</p>
+                <div class="key-characteristics">
+                    <h4>Key Characteristics:</h4>
+                    <ul>
+                        ${role.keyCharacteristics.map(char => `<li>${char}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        function toggleDetails(roleId) {
+            const detailsSection = document.getElementById(`details-${roleId}`);
+            const button = event.target;
+            
+            if (detailsSection.classList.contains('show')) {
+                detailsSection.classList.remove('show');
+                button.textContent = 'View Full Details';
+            } else {
+                detailsSection.classList.add('show');
+                button.textContent = 'Hide Details';
+            }
+        }
+
+        function initializeApp() {
+            const rolesGrid = document.getElementById('rolesGrid');
+            teamRoles.forEach(role => {
+                rolesGrid.appendChild(createRoleCard(role));
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', initializeApp);
+    </script>
+</body>
+</html>
